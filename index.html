@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ganesh Chaturthi Fund</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪔</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Mukta:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #5a0f1e;
+    --maroon-deep: #3e0a15;
+    --saffron: #e8750f;
+    --marigold: #f4b41a;
+    --bg: #fff6e3;
+    --card: #fffbf1;
+    --ink: #2b1810;
+    --muted: #7a5b45;
+    --head: #5a0f1e;
+    --line: #e9d3a8;
+    --chip-paid-bg: #fde7a6;
+    --chip-paid-ink: #4a2a00;
+    --display: "Yatra One", Georgia, "Times New Roman", serif;
+    --body: "Mukta", system-ui, -apple-system, "Segoe UI", sans-serif;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --maroon: #3a0a14;
+      --maroon-deep: #26060d;
+      --bg: #1e0b10;
+      --card: #2a1118;
+      --ink: #f7e8cc;
+      --muted: #c9a98c;
+      --head: #f4b41a;
+      --line: #5a2a34;
+      --chip-paid-bg: #5b3c07;
+      --chip-paid-ink: #fde7a6;
+    }
+  }
+  :root[data-theme="dark"] {
+    --maroon: #3a0a14;
+    --maroon-deep: #26060d;
+    --bg: #1e0b10;
+    --card: #2a1118;
+    --ink: #f7e8cc;
+    --muted: #c9a98c;
+    --head: #f4b41a;
+    --line: #5a2a34;
+    --chip-paid-bg: #5b3c07;
+    --chip-paid-ink: #fde7a6;
+  }
+
+  html { background: var(--maroon-deep); scroll-padding-top: env(safe-area-inset-top, 0px); }
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .hero {
+    background:
+      radial-gradient(circle at 50% 28%, rgba(244,180,26,.22), transparent 55%),
+      linear-gradient(180deg, var(--maroon-deep), var(--maroon));
+    color: #fff3d6;
+    text-align: center;
+    padding: 28px 20px 40px;
+  }
+  .hero h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    margin: 0 0 4px;
+    color: var(--marigold);
+    letter-spacing: .01em;
+  }
+  .hero .greeting { margin: 0; font-size: 1.05rem; opacity: .9; }
+  .ganesha { width: min(240px, 62vw); height: auto; margin: 10px auto 6px; display: block; }
+
+  .countdown-label { margin: 6px 0 14px; font-size: 1rem; opacity: .9; }
+  .countdown { display: flex; gap: 12px; justify-content: center; }
+  .unit {
+    min-width: 96px;
+    padding: 10px 8px 8px;
+    border: 2px solid var(--marigold);
+    border-radius: 14px;
+    background: rgba(0,0,0,.18);
+  }
+  .unit b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 10vw, 2.8rem);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    color: #fff3d6;
+  }
+  .unit span { font-size: .95rem; color: var(--marigold); }
+  .arrived { font-family: var(--display); font-size: 1.6rem; color: var(--marigold); margin: 8px 0 0; }
+
+  .garland {
+    height: 16px;
+    background-color: var(--maroon-deep);
+    background-image:
+      radial-gradient(circle at 10px 8px, var(--marigold) 5px, transparent 5.5px),
+      radial-gradient(circle at 20px 8px, var(--saffron) 5px, transparent 5.5px);
+    background-size: 20px 16px;
+    background-repeat: repeat-x;
+  }
+
+  main { max-width: 640px; margin: 0 auto; padding: 28px 18px 36px; }
+  h2 { font-family: var(--display); font-weight: 400; font-size: 1.5rem; color: var(--head); margin: 0 0 6px; }
+  .sub { margin: 0 0 14px; color: var(--muted); font-size: .98rem; }
+
+  .notice {
+    margin: 0 0 22px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1.5px dashed var(--saffron);
+    background: var(--card);
+    font-size: .95rem;
+  }
+
+  .money { margin-bottom: 34px; }
+  .amount-line { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 10px; margin-bottom: 10px; }
+  .amount-big { font-family: var(--display); font-size: clamp(2rem, 9vw, 2.8rem); color: var(--head); line-height: 1.1; }
+  .amount-of { color: var(--muted); }
+  .bar { height: 22px; border-radius: 999px; background: var(--card); border: 2px solid var(--saffron); overflow: hidden; }
+  .bar > div {
+    height: 100%; width: 0; border-radius: 999px;
+    background: linear-gradient(90deg, var(--saffron), var(--marigold));
+    transition: width 1.1s ease-out;
+  }
+  .bar-meta { display: flex; justify-content: space-between; margin-top: 6px; font-size: .92rem; color: var(--muted); }
+
+  .months { display: grid; gap: 10px; }
+  details, .row-upcoming { background: var(--card); border: 1.5px solid var(--line); border-radius: 14px; }
+  summary {
+    list-style: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 14px 16px;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary:focus-visible { outline: 3px solid var(--saffron); outline-offset: 2px; border-radius: 12px; }
+  .m-name { font-weight: 700; font-size: 1.08rem; }
+  .m-sum { text-align: right; font-size: .95rem; color: var(--muted); margin-left: auto; }
+  .m-sum strong { color: var(--head); font-size: 1.05rem; }
+  .chev {
+    width: 10px; height: 10px;
+    border-right: 2.5px solid var(--saffron);
+    border-bottom: 2.5px solid var(--saffron);
+    transform: rotate(45deg);
+    margin: 0 4px 3px 2px;
+    transition: transform .2s;
+    flex: none;
+  }
+  details[open] .chev { transform: rotate(-135deg); margin-bottom: -3px; }
+  .current { border-color: var(--saffron); border-width: 2px; }
+  .tag {
+    display: inline-block; margin-left: 8px; padding: 1px 9px;
+    border-radius: 999px; background: var(--saffron); color: #fff;
+    font-size: .78rem; font-weight: 600; vertical-align: 2px;
+  }
+  .body { padding: 14px 16px 16px; border-top: 1px dashed var(--line); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .chip { padding: 5px 13px; border-radius: 999px; font-size: .98rem; background: var(--chip-paid-bg); color: var(--chip-paid-ink); font-weight: 600; }
+  .none { color: var(--muted); font-style: italic; margin: 0; }
+  .row-upcoming { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; opacity: .6; }
+  .state { color: var(--muted); margin: 0; }
+
+  footer { background: var(--maroon-deep); color: #fff3d6; text-align: center; padding: 18px 16px 22px; }
+  footer p { margin: 0; }
+  footer .bappa { font-family: var(--display); color: var(--marigold); font-size: 1.15rem; }
+  footer .upd { font-size: .88rem; opacity: .75; margin-top: 4px; }
+
+  @media (prefers-reduced-motion: reduce) { .bar > div, .chev { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Ganesh Chaturthi Fund</h1>
+  <p class="greeting">Ganpati Bappa Morya!</p>
+
+  <svg class="ganesha" viewBox="0 0 400 400" role="img" aria-label="Illustration of Lord Ganesha">
+    <circle cx="200" cy="205" r="170" fill="none" stroke="#f4b41a" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <circle cx="200" cy="205" r="150" fill="#f4b41a" fill-opacity=".12"/>
+    <ellipse cx="92" cy="215" rx="62" ry="88" fill="#e8750f" stroke="#3e0a15" stroke-width="4"/>
+    <ellipse cx="308" cy="215" rx="62" ry="88" fill="#e8750f" stroke="#3e0a15" stroke-width="4"/>
+    <ellipse cx="96" cy="215" rx="34" ry="58" fill="#f4b41a" fill-opacity=".55"/>
+    <ellipse cx="304" cy="215" rx="34" ry="58" fill="#f4b41a" fill-opacity=".55"/>
+    <ellipse cx="200" cy="205" rx="92" ry="104" fill="#f29a3a" stroke="#3e0a15" stroke-width="4"/>
+    <path d="M138 138 L152 70 L178 108 L200 52 L222 108 L248 70 L262 138 Z" fill="#f4b41a" stroke="#3e0a15" stroke-width="4" stroke-linejoin="round"/>
+    <circle cx="200" cy="100" r="9" fill="#b3122c" stroke="#3e0a15" stroke-width="3"/>
+    <path d="M186 150 Q200 182 214 150" fill="none" stroke="#b3122c" stroke-width="7" stroke-linecap="round"/>
+    <circle cx="200" cy="168" r="4" fill="#b3122c"/>
+    <path d="M142 200 Q160 216 180 200" fill="none" stroke="#3e0a15" stroke-width="5" stroke-linecap="round"/>
+    <path d="M220 200 Q240 216 258 200" fill="none" stroke="#3e0a15" stroke-width="5" stroke-linecap="round"/>
+    <path d="M238 268 Q268 290 258 326" fill="none" stroke="#3e0a15" stroke-width="18" stroke-linecap="round"/>
+    <path d="M238 268 Q268 290 258 326" fill="none" stroke="#fff3d6" stroke-width="10" stroke-linecap="round"/>
+    <path d="M200 215 C200 285 198 322 170 346 C148 362 134 338 150 326" fill="none" stroke="#3e0a15" stroke-width="46" stroke-linecap="round"/>
+    <path d="M200 215 C200 285 198 322 170 346 C148 362 134 338 150 326" fill="none" stroke="#f29a3a" stroke-width="38" stroke-linecap="round"/>
+    <path d="M200 232 C200 285 198 318 172 340" fill="none" stroke="#e8750f" stroke-width="4" stroke-linecap="round" opacity=".6"/>
+  </svg>
+
+  <p class="countdown-label" id="festLabel">Until Ganesh Chaturthi</p>
+  <div class="countdown" id="countdown">
+    <div class="unit"><b id="cd-mo">--</b><span id="cd-mol">months</span></div>
+    <div class="unit"><b id="cd-d">--</b><span id="cd-dl">days</span></div>
+  </div>
+  <p class="arrived" id="arrived" hidden>Ganpati Bappa has arrived!</p>
+</header>
+<div class="garland" aria-hidden="true"></div>
+
+<main>
+  <p class="notice" id="notice" hidden></p>
+
+  <section class="money" aria-labelledby="money-h">
+    <h2 id="money-h">Money collected</h2>
+    <p class="sub" id="rule"></p>
+    <div class="amount-line">
+      <span class="amount-big" id="collected">₹0</span>
+      <span class="amount-of" id="target"></span>
+    </div>
+    <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="barWrap">
+      <div id="barFill"></div>
+    </div>
+    <div class="bar-meta"><span id="pct"></span><span id="remaining"></span></div>
+  </section>
+
+  <section aria-labelledby="months-h">
+    <h2 id="months-h">Who paid, month by month</h2>
+    <p class="sub">Tap a month to see the list.</p>
+    <div class="months" id="months"><p class="state">Loading the latest payments…</p></div>
+  </section>
+</main>
+
+<footer>
+  <p class="bappa">Ganpati Bappa Morya!</p>
+  <p class="upd" id="updated"></p>
+</footer>
+
+<script>
+  /* ================================================================
+     EDIT ONLY THIS BLOCK. Everything below it updates by itself.
+     ================================================================ */
+  const CONFIG = {
+    /* Target amount in rupees */
+    target: 50000,
+
+    /* Money collected so far.
+       - Type a number (for example 12500) to set it by hand.
+       - Leave it as null to count it from the Google Sheet
+         (number of payments x amountPerMonth). */
+    collected:null,
+
+    /* Paste the published Google Sheet CSV link between the quotes.
+       Leave empty to see sample names in preview mode. */
+    sheetCsvUrl: "https://docs.google.com/spreadsheets/d/e/2PACX-1vQVtmP24OIc3dLKcNnpwJnfGOd6v-JfNG7LF7pFFzNaPrr4jbdirRBcOj8bXhQgUbYC-Q3rdm9jiE0X/pub?gid=0&single=true&output=csv",
+
+    festivalDate: "2027-09-04T06:00:00+05:30",
+    festivalLabel: "4 September 2027",
+    amountPerMonth: 500,
+    startMonth: "2026-10",
+    endMonth: "2027-08"
+  };
+  /* ================================================================
+     END OF EDIT BLOCK
+     ================================================================ */
+
+
+  /* Shown only while sheetCsvUrl is empty, so you can preview the page. */
+  const DEMO_ROWS = [
+    ["Oct 2026", "Member 1"], ["Oct 2026", "Member 3"],
+    ["Oct 2026", "Member 4"], ["Oct 2026", "Member 7"]
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const pad = (n) => String(n).padStart(2, "0");
+  const inr = (n) => "₹" + n.toLocaleString("en-IN");
+  const MON = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"];
+
+  /* ---------- Months ---------- */
+  function monthKeys(start, end) {
+    const keys = [];
+    let [y, m] = start.split("-").map(Number);
+    const [ey, em] = end.split("-").map(Number);
+    while (y < ey || (y === ey && m <= em)) {
+      keys.push(y + "-" + pad(m));
+      m++; if (m > 12) { m = 1; y++; }
+    }
+    return keys;
+  }
+  function monthLabel(key) {
+    const [y, m] = key.split("-").map(Number);
+    return new Date(y, m - 1, 1).toLocaleString("en-IN", { month: "long", year: "numeric" });
+  }
+  const KEYS = monthKeys(CONFIG.startMonth, CONFIG.endMonth);
+  const NOW = new Date();
+  const NOW_KEY = NOW.getFullYear() + "-" + pad(NOW.getMonth() + 1);
+
+  /* Accepts "Oct 2026", "October 2026", "2026-10", "10/2026", "Oct 1, 2026", "1 Oct 2026" */
+  function toKey(raw) {
+    const s = String(raw || "").trim().toLowerCase();
+    if (!s) return null;
+    let m;
+    if ((m = s.match(/^(\d{4})-(\d{1,2})(?:-\d{1,2})?$/))) return m[1] + "-" + pad(m[2]);
+    if ((m = s.match(/^([a-z]{3})[a-z]*[\s\-.,]*(\d{4})$/))) {
+      const i = MON.indexOf(m[1]); return i >= 0 ? m[2] + "-" + pad(i + 1) : null;
+    }
+    if ((m = s.match(/^(\d{1,2})[\/\-](\d{4})$/))) return m[2] + "-" + pad(m[1]);
+    if ((m = s.match(/^([a-z]{3})[a-z]*\s+\d{1,2},?\s+(\d{4})$/))) {
+      const i = MON.indexOf(m[1]); return i >= 0 ? m[2] + "-" + pad(i + 1) : null;
+    }
+    if ((m = s.match(/^\d{1,2}\s+([a-z]{3})[a-z]*,?\s+(\d{4})$/))) {
+      const i = MON.indexOf(m[1]); return i >= 0 ? m[2] + "-" + pad(i + 1) : null;
+    }
+    return null;
+  }
+
+  /* ---------- CSV ---------- */
+  function parseCSV(text) {
+    const rows = []; let row = [], cur = "", q = false;
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (q) {
+        if (c === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; }
+        else cur += c;
+      } else if (c === '"') q = true;
+      else if (c === ",") { row.push(cur); cur = ""; }
+      else if (c === "\n" || c === "\r") {
+        if (c === "\r" && text[i + 1] === "\n") i++;
+        row.push(cur); cur = ""; rows.push(row); row = [];
+      } else cur += c;
+    }
+    if (cur !== "" || row.length) { row.push(cur); rows.push(row); }
+    return rows;
+  }
+
+  /* ---------- Build data from rows ---------- */
+  function buildData(rows) {
+    const byMonth = {}; KEYS.forEach((k) => (byMonth[k] = []));
+    const seen = new Set(); let skipped = 0;
+    rows.forEach((r, idx) => {
+      const rawMonth = (r[0] || "").trim(), name = (r[1] || "").trim();
+      if (!rawMonth && !name) return;
+      if (idx === 0 && rawMonth.toLowerCase() === "month") return;
+      const key = toKey(rawMonth);
+      if (!key || !name) { skipped++; return; }
+      if (!byMonth[key]) return; /* outside the collection period */
+      const id = key + "|" + name.toLowerCase();
+      if (seen.has(id)) return;
+      seen.add(id);
+      byMonth[key].push(name);
+    });
+    return { byMonth, skipped };
+  }
+
+  /* ---------- Render ---------- */
+  function el(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+
+  function render(data) {
+    let count = 0;
+    KEYS.forEach((k) => (count += data.byMonth[k].length));
+    const collected = typeof CONFIG.collected === "number" ? CONFIG.collected : count * CONFIG.amountPerMonth;
+    const target = CONFIG.target;
+    const pct = Math.min(100, Math.round((collected / target) * 100));
+
+    $("rule").textContent = inr(CONFIG.amountPerMonth) + " per member, every month from " +
+      monthLabel(KEYS[0]) + " to " + monthLabel(KEYS[KEYS.length - 1]) + ".";
+    $("collected").textContent = inr(collected);
+    $("target").textContent = "collected of " + inr(target);
+    $("pct").textContent = pct + "% of the target";
+    $("remaining").textContent = inr(Math.max(0, target - collected)) + " to go";
+    $("barWrap").setAttribute("aria-valuenow", pct);
+    requestAnimationFrame(() => { $("barFill").style.width = pct + "%"; });
+
+    const wrap = $("months");
+    wrap.textContent = "";
+    KEYS.forEach((key) => {
+      if (key > NOW_KEY) {
+        const row = el("div", "row-upcoming");
+        row.appendChild(el("span", "m-name", monthLabel(key)));
+        row.appendChild(el("span", "m-sum", "Upcoming"));
+        wrap.appendChild(row);
+        return;
+      }
+      const names = data.byMonth[key];
+      const d = el("details", key === NOW_KEY ? "current" : "");
+      if (key === NOW_KEY) d.open = true;
+
+      const sum = el("summary");
+      const nm = el("span", "m-name", monthLabel(key));
+      if (key === NOW_KEY) nm.appendChild(el("span", "tag", "This month"));
+      const ms = el("span", "m-sum");
+      ms.appendChild(el("strong", "", inr(names.length * CONFIG.amountPerMonth)));
+      ms.appendChild(document.createElement("br"));
+      ms.appendChild(document.createTextNode(names.length + " paid"));
+      sum.append(nm, ms, el("span", "chev"));
+      sum.lastChild.setAttribute("aria-hidden", "true");
+
+      const body = el("div", "body");
+      if (names.length) {
+        const ul = el("ul", "chips");
+        names.forEach((n) => ul.appendChild(el("li", "chip", n)));
+        body.appendChild(ul);
+      } else {
+        body.appendChild(el("p", "none", "No payments yet."));
+      }
+      d.append(sum, body);
+      wrap.appendChild(d);
+    });
+
+    if (data.skipped > 0) {
+      const n = $("notice");
+      n.hidden = false;
+      n.textContent = data.skipped + " row(s) in the sheet could not be read. Check the Month and Name columns.";
+    }
+  }
+
+  /* ---------- Load ---------- */
+  async function load() {
+    if (!CONFIG.sheetCsvUrl) {
+      const n = $("notice");
+      n.hidden = false;
+      n.textContent = "Preview mode: showing sample names. Connect the Google Sheet to show real payments.";
+      render(buildData(DEMO_ROWS));
+      $("updated").textContent = "Sample data";
+      return;
+    }
+    try {
+      const res = await fetch(CONFIG.sheetCsvUrl, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const text = await res.text();
+      render(buildData(parseCSV(text)));
+      const t = new Date();
+      $("updated").textContent = "Updated " + t.toLocaleString("en-IN", { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
+    } catch (err) {
+      $("months").textContent = "";
+      $("months").appendChild(el("p", "state", "Could not load the latest payments. Please check your connection and refresh the page."));
+      $("collected").textContent = "—";
+      $("target").textContent = "of " + inr(CONFIG.target);
+    }
+  }
+  load();
+
+  /* ---------- Countdown (months and days) ---------- */
+  const targetTs = new Date(CONFIG.festivalDate).getTime();
+  $("festLabel").textContent = "Until Ganesh Chaturthi, " + CONFIG.festivalLabel;
+  function tick() {
+    const nowD = new Date();
+    const t = new Date(targetTs);
+    if (t - nowD <= 0) {
+      $("countdown").hidden = true;
+      $("festLabel").hidden = true;
+      $("arrived").hidden = false;
+      return false;
+    }
+    let months = (t.getFullYear() - nowD.getFullYear()) * 12 + (t.getMonth() - nowD.getMonth());
+    let anchor = new Date(nowD);
+    anchor.setMonth(anchor.getMonth() + months);
+    if (anchor > t) {
+      months--;
+      anchor = new Date(nowD);
+      anchor.setMonth(anchor.getMonth() + months);
+    }
+    const days = Math.floor((t - anchor) / 86400000);
+    $("cd-mo").textContent = months;
+    $("cd-d").textContent = days;
+    $("cd-mol").textContent = months === 1 ? "month" : "months";
+    $("cd-dl").textContent = days === 1 ? "day" : "days";
+    return true;
+  }
+  if (tick()) setInterval(tick, 60000);
+</script>
+</body>
+</html>
